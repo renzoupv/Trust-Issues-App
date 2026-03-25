@@ -1,7 +1,3 @@
-// lib/screens/select_category_screen.dart
-//
-// Returned by showDialog() — must be a Dialog widget, not a Scaffold.
-
 import 'package:flutter/material.dart';
 import '../data/word_categories.dart';
 import '../utils/app_theme.dart';
@@ -26,7 +22,7 @@ class SelectCategoryScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
 
-            // ── Header ──
+            // Header 
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 12, 12),
               child: Row(
@@ -51,7 +47,7 @@ class SelectCategoryScreen extends StatelessWidget {
               ),
             ),
 
-            // ── Category options ──
+            // Category options 
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Column(

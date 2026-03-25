@@ -1,17 +1,9 @@
-// lib/utils/player_storage.dart
-//
-// Handles saving and loading player names to/from the device's local storage.
-// Uses the shared_preferences package which stores simple key-value data.
-//
-// Only player NAMES are saved — not roles or words (those are generated fresh each round).
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlayerStorage {
   // The key used to store the list in SharedPreferences
   static const String _storageKey = 'saved_player_names';
 
-  // ── Save ────────────────────────────────────────────────────────────────
   // Saves a list of player names to local storage.
   // Overwrites any previously saved list.
   static Future<void> savePlayers(List<String> names) async {
@@ -22,7 +14,6 @@ class PlayerStorage {
     await prefs.setStringList(_storageKey, names);
   }
 
-  // ── Load ────────────────────────────────────────────────────────────────
   // Loads the saved player names from local storage.
   // Returns an empty list if nothing has been saved yet.
   static Future<List<String>> loadPlayers() async {
@@ -33,7 +24,6 @@ class PlayerStorage {
     return prefs.getStringList(_storageKey) ?? [];
   }
 
-  // ── Clear ────────────────────────────────────────────────────────────────
   // Removes the saved player list (useful for a "reset" option in the future).
   static Future<void> clearPlayers() async {
     final prefs = await SharedPreferences.getInstance();

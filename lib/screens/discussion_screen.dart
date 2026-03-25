@@ -1,12 +1,3 @@
-// lib/screens/discussion_screen.dart
-//
-// Design: Dark charcoal/gray background. "Discussion Time!" large bold dark text.
-// White rounded card in center:
-//   - Player name + "Start the conversation!"
-//   - Big red timer "Time: 10:00 m"
-// Discussion Tips in italic below card.
-// Gray "Reveal the Imposter & Word" button, dark "New Round" button.
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/game_state.dart';
@@ -60,7 +51,6 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     });
   }
 
-  // Format as "M:SS m" or "M:SS s" matching the mockup ("10:00 m", "0:58 s")
   String get _timerDisplay {
     final m = _secondsRemaining ~/ 60;
     final s = _secondsRemaining % 60;
@@ -125,7 +115,6 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // ── "Discussion Time!" large title ──
                   Text(
                     _timeIsUp
                         ? 'End of\nRound!'
@@ -139,7 +128,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  // ── White center card ──
+                  // White center card 
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
@@ -172,7 +161,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 14,
-                            color: AppColors.textGray,
+                            color: Color.fromARGB(255, 10, 0, 0),
                           ),
                         ),
 
@@ -203,12 +192,11 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
 
                   const SizedBox(height: 24),
 
-                  // ── Discussion Tips (italic) ──
                   const Text(
                     'Discussion Tips',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 18,
                       color: Colors.white,
                       fontStyle: FontStyle.italic,
                     ),
@@ -224,7 +212,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                         child: Text(
                           '• $tip',
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 16,
                             color: Colors.white70,
                             fontStyle: FontStyle.italic,
                           ),
@@ -233,14 +221,14 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
 
                   const SizedBox(height: 24),
 
-                  // ── Reveal button (gray like the mockup) ──
+                  // Reveal button 
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey.shade600,
                         foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -254,15 +242,13 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-
-                  // ── New Round dark button ──
                   BigDarkButton(label: 'New Round', onPressed: _newRound),
                   const SizedBox(height: 8),
                 ],
               ),
             ),
 
-            // ── X close button top-right ──
+            // X close button top-right 
             Positioned(
               top: 8,
               right: 8,

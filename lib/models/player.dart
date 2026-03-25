@@ -1,8 +1,3 @@
-// lib/models/player.dart
-//
-// A Player is just a name + whether they are the imposter this round.
-// Keeping this in its own file makes it easy to find and extend later.
-
 class Player {
   final String name;       // The player's display name
   bool isImposter;         // True only for the one imposter each round

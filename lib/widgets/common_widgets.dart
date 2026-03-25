@@ -1,5 +1,3 @@
-// lib/widgets/common_widgets.dart
-
 import 'package:flutter/material.dart';
 import '../utils/app_theme.dart';
 
@@ -43,7 +41,7 @@ class TrustIssuesHeader extends StatelessWidget {
   }
 }
 
-// ── A single settings row on the home screen (white pill card)
+// A single settings row on the home screen 
 // Shows an icon + label on the left and a tappable action text on the right
 class SettingsTile extends StatelessWidget {
   final IconData icon;
@@ -51,7 +49,7 @@ class SettingsTile extends StatelessWidget {
   final String actionLabel;
   final Color? actionColor;
   final VoidCallback onTap;
-  final Widget? trailing; // optional custom trailing widget (e.g. a toggle)
+  final Widget? trailing; 
 
   const SettingsTile({
     super.key,
@@ -107,7 +105,7 @@ class SettingsTile extends StatelessWidget {
   }
 }
 
-// ── Full-width green button used for primary actions
+// Full-width green button used for primary actions
 class BigGreenButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
@@ -136,7 +134,7 @@ class BigGreenButton extends StatelessWidget {
   }
 }
 
-// ── Full-width dark/black button (used for "New Round" in mockup)
+// Full-width dark/black button 
 class BigDarkButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
@@ -170,7 +168,7 @@ class BigDarkButton extends StatelessWidget {
   }
 }
 
-// ── White rounded card container
+// White rounded card container
 class GameCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
