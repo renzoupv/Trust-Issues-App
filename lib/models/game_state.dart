@@ -1,12 +1,3 @@
-// lib/models/game_state.dart
-//
-// Holds everything needed during an active round:
-//   - which players exist, who is the imposter
-//   - the secret word
-//   - whose turn it is to view their word
-//
-// GameState is created fresh at the start of every round.
-
 import 'dart:math';
 import 'player.dart';
 import 'game_settings.dart';
@@ -15,7 +6,7 @@ import '../data/word_categories.dart';
 class GameState {
   final List<Player> players;   // All players with their roles assigned
   final String secretWord;      // The word all non-imposters received
-  int currentPlayerIndex;       // Which player is currently viewing their word (0-based)
+  int currentPlayerIndex;       // Which player is currently viewing their word 
 
   GameState({
     required this.players,
@@ -23,7 +14,7 @@ class GameState {
     this.currentPlayerIndex = 0,
   });
 
-  // ── Factory constructor ──────────────────────────────────────────────────
+
   // Creates a brand-new GameState from settings:
   //   1. Picks a random word from the chosen category
   //   2. Shuffles the player order so the imposter position is unpredictable
@@ -57,8 +48,6 @@ class GameState {
       secretWord: secretWord,
     );
   }
-
-  // ── Convenience getters ──────────────────────────────────────────────────
 
   // The player who is currently being shown their word
   Player get currentPlayer => players[currentPlayerIndex];

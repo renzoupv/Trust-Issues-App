@@ -1,12 +1,3 @@
-// lib/screens/summary_screen.dart
-//
-// Design: Same dark background as discussion screen. "Discussion Time!" title.
-// White "Game Summary" card with:
-//   - Pink chip: "The Imposter is: Johann" (red bold text)
-//   - Blue chip: "The word was: Cat" (blue italic text)
-//   - Dark "New Round" button
-// Discussion Tips in white italic below.
-
 import 'package:flutter/material.dart';
 import '../models/game_state.dart';
 import '../models/game_settings.dart';
@@ -55,7 +46,7 @@ class SummaryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ── "Discussion Time!" title (same as discussion screen) ──
+              // "Discussion Time!" title (same as discussion screen) 
               const Text(
                 'Discussion\nTime!',
                 style: TextStyle(
@@ -67,7 +58,7 @@ class SummaryScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // ── Game Summary white card ──
+              // Game Summary white card 
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -150,7 +141,6 @@ class SummaryScreen extends StatelessWidget {
 
                     const SizedBox(height: 16),
 
-                    // New Round dark button (inside the card, matches mockup)
                     BigDarkButton(label: 'New Round', onPressed: () => _newRound(context)),
                   ],
                 ),
@@ -158,12 +148,12 @@ class SummaryScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // ── Discussion Tips below the card ──
+              // Discussion Tips below the card 
               const Text(
                 'Discussion Tips',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 13,
+                  fontSize: 18,
                   color: Colors.white,
                   fontStyle: FontStyle.italic,
                 ),
@@ -179,7 +169,7 @@ class SummaryScreen extends StatelessWidget {
                     child: Text(
                       '• $tip',
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 16,
                         color: Colors.white70,
                         fontStyle: FontStyle.italic,
                       ),
@@ -188,14 +178,14 @@ class SummaryScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // ── New Game button ──
+              // New Game button
               SizedBox(
                 width: double.infinity,
                 height: 46,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 255, 90, 90),
                     foregroundColor: Colors.white70,
-                    side: const BorderSide(color: Colors.white38),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

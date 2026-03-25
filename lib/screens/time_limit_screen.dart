@@ -1,7 +1,3 @@
-// lib/screens/time_limit_screen.dart
-//
-// Returned by showDialog() — must be a Dialog widget, not a Scaffold.
-
 import 'package:flutter/material.dart';
 import '../utils/app_theme.dart';
 
@@ -39,7 +35,7 @@ class _TimeLimitScreenState extends State<TimeLimitScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
 
-            // ── Header ──
+            // Header 
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 12, 4),
               child: Row(
@@ -74,7 +70,7 @@ class _TimeLimitScreenState extends State<TimeLimitScreen> {
               ),
             ),
 
-            // ── Options list ──
+            // Options list 
             Flexible(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -115,7 +111,7 @@ class _TimeLimitScreenState extends State<TimeLimitScreen> {
               ),
             ),
 
-            // ── Black CONFIRM button — pops with the selected value ──
+            // Black CONFIRM button — pops with the selected value 
             Padding(
               padding: const EdgeInsets.all(16),
               child: SizedBox(

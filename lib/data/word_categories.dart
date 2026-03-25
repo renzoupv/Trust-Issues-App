@@ -1,11 +1,4 @@
-// lib/data/word_categories.dart
-//
-// All word categories and their word lists live here.
-// To add a new category, just add a new entry to the map below — no other file needs to change.
-
 class WordCategories {
-  // Map of category name → list of words
-  // Each round picks one random word from the chosen category.
   static const Map<String, List<String>> categories = {
     'Foods & Drinks': [
       'Pizza', 'Sushi', 'Burger', 'Pasta', 'Tacos',
@@ -27,7 +20,7 @@ class WordCategories {
     ],
   };
 
-  // Returns just the category names as a list (used to build the category picker)
+  // Returns just the category names as a list
   static List<String> get categoryNames => categories.keys.toList();
 
   // Returns the word list for a given category name

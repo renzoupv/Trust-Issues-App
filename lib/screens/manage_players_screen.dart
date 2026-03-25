@@ -1,8 +1,3 @@
-// lib/screens/manage_players_screen.dart
-//
-// Returned by showDialog() — must be a Dialog widget, not a Scaffold.
-// The dark overlay behind it is provided by showDialog's barrierColor.
-
 import 'package:flutter/material.dart';
 import '../utils/app_theme.dart';
 
@@ -79,7 +74,6 @@ class _ManagePlayersScreenState extends State<ManagePlayersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Dialog widget — showDialog already provides the dark barrier behind it
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
@@ -93,7 +87,7 @@ class _ManagePlayersScreenState extends State<ManagePlayersScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
 
-            // ── Header ──
+            // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 12, 0),
               child: Row(
@@ -118,7 +112,7 @@ class _ManagePlayersScreenState extends State<ManagePlayersScreen> {
               ),
             ),
 
-            // ── Active Players count + Slider ──
+            // Active Players count + Slider 
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
               child: Column(
@@ -164,7 +158,7 @@ class _ManagePlayersScreenState extends State<ManagePlayersScreen> {
 
             const Divider(height: 1),
 
-            // ── Player list ──
+            // Player list 
             Flexible(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -215,7 +209,7 @@ class _ManagePlayersScreenState extends State<ManagePlayersScreen> {
               ),
             ),
 
-            // ── Save button ──
+            // Save button 
             Padding(
               padding: const EdgeInsets.all(16),
               child: SizedBox(

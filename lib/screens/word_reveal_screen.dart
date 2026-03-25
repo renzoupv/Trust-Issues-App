@@ -1,13 +1,3 @@
-// lib/screens/word_reveal_screen.dart
-//
-// Design:
-//   - Coral header: "TRUST ISSUES" stacked + X close button top-right
-//   - White body: plain white background
-//   - Center card: white with rounded corners, player name, tip, button inside
-//   - Hidden state: "Renz" + tip + green "Show my Word" button
-//   - Revealed state (word): "Renz / Your Word is: / Cat (italic)" + green "Hide Word & Pass"
-//   - Revealed state (imposter): "Johann / You are the: / Imposter (italic)" + green "Hide Word & Pass"
-
 import 'package:flutter/material.dart';
 import '../models/game_state.dart';
 import '../models/game_settings.dart';
@@ -83,7 +73,6 @@ class _WordRevealScreenState extends State<WordRevealScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ── Coral header: TRUST ISSUES + X button ──
             Stack(
               alignment: Alignment.center,
               children: [
@@ -129,7 +118,7 @@ class _WordRevealScreenState extends State<WordRevealScreen> {
               ],
             ),
 
-            // ── White body ──
+            // White body
             Expanded(
               child: Container(
                 color: Colors.white,
@@ -168,7 +157,7 @@ class _WordRevealScreenState extends State<WordRevealScreen> {
                             const SizedBox(height: 14),
 
                             if (!isWordVisible) ...[
-                              // ── Hidden: show tip ──
+                              // Hidden: show tip 
                               Text(
                                 currentPlayer.isImposter
                                     ? 'Tip: Do not let anyone\nknow you\'re the imposter!'
@@ -186,7 +175,7 @@ class _WordRevealScreenState extends State<WordRevealScreen> {
                                 onPressed: _showWord,
                               ),
                             ] else if (currentPlayer.isImposter) ...[
-                              // ── Revealed: imposter ──
+                              // Revealed: imposter 
                               const Text(
                                 'You are the:',
                                 style: TextStyle(fontSize: 14, color: AppColors.textGray),
@@ -217,7 +206,7 @@ class _WordRevealScreenState extends State<WordRevealScreen> {
                                 onPressed: _hideAndPass,
                               ),
                             ] else ...[
-                              // ── Revealed: word ──
+                              // Revealed: word 
                               const Text(
                                 'Your Word is:',
                                 style: TextStyle(fontSize: 14, color: AppColors.textGray),

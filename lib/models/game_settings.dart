@@ -1,5 +1,3 @@
-// lib/models/game_settings.dart
-
 class GameSettings {
   List<String> playerNames;
   int imposterCount;
@@ -22,7 +20,6 @@ class GameSettings {
     return '$timeLimitMinutes Minute${timeLimitMinutes == 1 ? '' : 's'}';
   }
 
-  // ── Imposter rules ──────────────────────────────────────────────────────
   // Returns the allowed imposter counts based on current player count.
   // Rules:
   //   3–5  players → only 1 imposter allowed

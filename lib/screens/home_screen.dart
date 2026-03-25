@@ -1,11 +1,3 @@
-// lib/screens/home_screen.dart
-//
-// Design:
-//   - Coral top half: "TRUST ISSUES", "Find the imposter among you!", How to Play list
-//   - White bottom half: settings rows (each a white tile on white bg with subtle border),
-//     START GAME green button
-//   - The entire white section is a rounded-top white card
-
 import 'package:flutter/material.dart';
 import '../models/game_settings.dart';
 import '../models/game_state.dart';
@@ -44,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openManagePlayers() async {
-    // showDialog keeps the home screen visible behind the modal overlay
     final updated = await showDialog<List<String>>(
       context: context,
       barrierColor: Colors.black54,    // dim the background
@@ -70,8 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
-        // We need a local StatefulBuilder so the dialog can rebuild
-        // when the user taps a different option inside the dialog
         int tempSelected = settings.imposterCount;
         final allowed = settings.allowedImposterCounts;
 
@@ -87,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Subtitle showing the rule for the current player count
                   Text(
                     _imposterRuleLabel(settings.playerNames.length),
                     style: const TextStyle(fontSize: 12, color: AppColors.textGray),
@@ -130,42 +118,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
+
+                  const SizedBox(height: 8),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 44,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.coral,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      onPressed: () {
+                        setState(() => settings.imposterCount = tempSelected);
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('Confirm', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 44,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: AppColors.textGray),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      onPressed: () => Navigator.pop(ctx),
+                      child: const Text('Cancel', style: TextStyle(color: AppColors.textGray)),
+                    ),
+                  ),
                 ],
               ),
-              actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              actions: [
-                // Cancel — dismiss without saving
-                SizedBox(
-                  width: double.infinity,
-                  height: 44,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: AppColors.textGray),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
-                    onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Cancel', style: TextStyle(color: AppColors.textGray)),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                // Confirm — save selection and close
-                SizedBox(
-                  width: double.infinity,
-                  height: 44,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.coral,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
-                    onPressed: () {
-                      setState(() => settings.imposterCount = tempSelected);
-                      Navigator.pop(ctx);
-                    },
-                    child: const Text('Confirm', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
+              actions: const [],
+              actionsPadding: EdgeInsets.zero,
             );
           },
         );
@@ -231,13 +219,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ── Coral top: TRUST ISSUES + subtitle + How to Play ──
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Big stacked title
                   const Center(
                     child: Column(
                       children: [
@@ -279,24 +265,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 18,
                     ),
                   ),
                   const SizedBox(height: 4),
                   ...[
                     'Pass the device to each player to see their word',
                     'Most players get the same word',
-                    '1 impostor gets a different word',
+                    '1 or more impostors get picked',
                     'Discuss and find the impostor!',
                   ].asMap().entries.map((e) => Text(
                         '${e.key + 1}. ${e.value}',
-                        style: const TextStyle(color: Colors.white, fontSize: 11),
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
                       )),
                 ],
               ),
             ),
 
-            // ── White rounded card takes up the rest ──
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -377,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// ── Individual setting row tile ──────────────────────────────────────────────
+// Individual setting row tile 
 class _SettingRow extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -451,7 +436,7 @@ class _SettingRow extends StatelessWidget {
   }
 }
 
-// ── Time Limit row with toggle switch ────────────────────────────────────────
+// Time Limit row with toggle switch 
 class _TimeLimitRow extends StatelessWidget {
   final bool hasTimeLimit;
   final String timeLimitLabel;
