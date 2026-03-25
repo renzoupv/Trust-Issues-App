@@ -51,6 +51,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     });
   }
 
+  // "10:00 m" while minutes remain, "0:58 s" when under a minute
   String get _timerDisplay {
     final m = _secondsRemaining ~/ 60;
     final s = _secondsRemaining % 60;
@@ -63,7 +64,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => SummaryScreen(gameState: widget.gameState, settings: widget.settings),
+        builder: (_) => SummaryScreen(
+          gameState: widget.gameState,
+          settings: widget.settings,
+        ),
       ),
     );
   }
@@ -74,7 +78,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => WordRevealScreen(gameState: newState, settings: widget.settings),
+        builder: (_) => WordRevealScreen(
+          gameState: newState,
+          settings: widget.settings,
+        ),
       ),
     );
   }
@@ -86,7 +93,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         title: const Text('Leave Game?'),
         content: const Text('Are you sure you want to quit?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               _timer?.cancel();
@@ -102,87 +112,104 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Use first player's name as the "active" discusser shown in the card
     final activePlayer = widget.gameState.players.first;
 
     return Scaffold(
-      backgroundColor: AppColors.darkBg,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+
+                  // Discussion time
                   Text(
-                    _timeIsUp
-                        ? 'End of\nRound!'
-                        : 'Discussion\nTime!',
+                    _timeIsUp ? 'End of\nRound!' : 'Discussion\nTime!',
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 44,
+                      fontSize: 56,
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      height: 1.1,
+                      color: Color(0xFF2D2D2D), // dark charcoal — matches screenshot
+                      height: 1.05,
                     ),
                   ),
-                  const SizedBox(height: 20),
 
-                  // White center card 
+                  const SizedBox(height: 32),
+
+                  // White Card
                   Container(
-                    padding: const EdgeInsets.all(24),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: const Color(0xFFDDDDDD), width: 1.5),
                     ),
                     child: Column(
                       children: [
-                        // Player name
+
+                        // Player name 
                         Text(
                           activePlayer.name,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.textDark,
+                            color: Color(0xFF2D2D2D),
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 8),
+
+                        // Subtitle
                         Text(
                           _timeIsUp
                               ? 'Time to vote who\'s the Imposter!'
                               : 'Start the conversation!',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 10, 0, 0),
+                            fontSize: 18,
+                            color: Color(0xFF2D2D2D),
                           ),
                         ),
 
-                        // Timer display (only shown when time limit is active)
+                        // Timer (only when time limit is on)
                         if (widget.settings.hasTimeLimit) ...[
-                          const SizedBox(height: 16),
-                          const Text(
+                          const SizedBox(height: 20),
+                          Text(
                             'Time:',
                             style: TextStyle(
-                              fontSize: 13,
-                              color: AppColors.textGray,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              // Red while counting, gray when done
+                              color: _timeIsUp
+                                  ? const Color(0xFF9E9E9E)
+                                  : AppColors.coral,
                             ),
                           ),
                           Text(
                             _timerDisplay,
                             style: TextStyle(
-                              fontSize: 42,
+                              fontSize: 44,
                               fontWeight: FontWeight.w900,
-                              // Red timer matching the mockup
-                              color: _timeIsUp ? AppColors.textGray : AppColors.coral,
+                              color: _timeIsUp
+                                  ? const Color(0xFF9E9E9E)
+                                  : AppColors.coral,
+                            ),
+                          ),
+                        ],
+
+                        // ── No timer message (when time limit is OFF) ──
+                        if (!widget.settings.hasTimeLimit) ...[
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Discuss until everyone is ready to vote.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF9E9E9E),
+                              fontStyle: FontStyle.italic,
                             ),
                           ),
                         ],
@@ -190,71 +217,122 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 28),
 
+                  // Discussion Tips
                   const Text(
                     'Discussion Tips',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.italic,
+                      color: Color(0xFF2D2D2D),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 10),
+
+                  // Bullet tips 
                   ...[
                     'Describe the word without saying it.',
                     'Pay attention to suspicious answers.',
                     'The imposter will try to blend in!',
                     'Vote together on who you think the imposter is.',
                   ].map((tip) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2),
-                        child: Text(
-                          '• $tip',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.white70,
-                            fontStyle: FontStyle.italic,
-                          ),
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '• ',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFF555555),
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                tip,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF555555),
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )),
 
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 28),
 
-                  // Reveal button 
+                  // Reveal Button
                   SizedBox(
                     width: double.infinity,
+                    height: 67,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade600,
+                        backgroundColor: const Color(0xFF8A8A8A),
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       onPressed: _revealImposter,
                       child: const Text(
                         'Reveal the\nImposter & Word',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          height: 1.3,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  BigDarkButton(label: 'New Round', onPressed: _newRound),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
+
+                  // New Round Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 58,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1C2B3A),
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      onPressed: _newRound,
+                      child: const Text(
+                        'New Round',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
 
-            // X close button top-right 
+            // Close Button
             Positioned(
-              top: 8,
-              right: 8,
+              top: 12,
+              right: 16,
               child: GestureDetector(
                 onTap: _close,
-                child: const Icon(Icons.close, color: Colors.white, size: 22),
+                child: const Icon(
+                  Icons.close,
+                  color: Color(0xFFBBBBBB),
+                  size: 24,
+                ),
               ),
             ),
           ],

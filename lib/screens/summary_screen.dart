@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/game_state.dart';
 import '../models/game_settings.dart';
 import '../utils/app_theme.dart';
-import '../widgets/common_widgets.dart';
 import 'word_reveal_screen.dart';
 import 'home_screen.dart';
 
@@ -34,169 +33,258 @@ class SummaryScreen extends StatelessWidget {
     );
   }
 
+  void _close(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Leave Game?'),
+        content: const Text('Are you sure you want to quit?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => _newGame(context),
+            child: const Text('Leave', style: TextStyle(color: AppColors.coral)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final imposterNames = gameState.imposterNames.join(' & ');
 
     return Scaffold(
-      backgroundColor: AppColors.darkBg,
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // "Discussion Time!" title (same as discussion screen) 
-              const Text(
-                'Discussion\nTime!',
-                style: TextStyle(
-                  fontSize: 44,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  height: 1.1,
-                ),
-              ),
-              const SizedBox(height: 20),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
 
-              // Game Summary white card 
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Game Summary',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Imposter pink chip
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: AppColors.imposterPink,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'The Imposter is:',
-                            style: TextStyle(fontSize: 12, color: AppColors.imposterRed),
-                          ),
-                          Text(
-                            imposterNames,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.imposterRed,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    // Word blue chip
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: AppColors.wordBlue,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'The word was:',
-                            style: TextStyle(fontSize: 12, color: AppColors.wordBlueDark),
-                          ),
-                          Text(
-                            gameState.secretWord,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              color: AppColors.wordBlueDark,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    BigDarkButton(label: 'New Round', onPressed: () => _newRound(context)),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Discussion Tips below the card 
-              const Text(
-                'Discussion Tips',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              const SizedBox(height: 6),
-              ...[
-                'Describe the word without saying it.',
-                'Pay attention to suspicious answers.',
-                'The imposter will try to blend in!',
-                'Vote together on who you think the imposter is.',
-              ].map((tip) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: Text(
-                      '• $tip',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white70,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  )),
-
-              const SizedBox(height: 24),
-
-              // New Game button
-              SizedBox(
-                width: double.infinity,
-                height: 46,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 255, 90, 90),
-                    foregroundColor: Colors.white70,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                  // Discussion Time Title
+                  const Text(
+                    'Discussion\nTime!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 56,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF2D2D2D),
+                      height: 1.05,
                     ),
                   ),
-                  onPressed: () => _newGame(context),
-                  child: const Text('New Game'),
+
+                  const SizedBox(height: 28),
+
+                  // Game Summary Card
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: const Color(0xFFDDDDDD), width: 1.5),
+                    ),
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Game Summary',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF2D2D2D),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFCDD2), 
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'The Imposter is:',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFFE53935), 
+                                ),
+                              ),
+                              Text(
+                                imposterNames,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFE53935),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // Blue word chip 
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFBBDEFB), 
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            children: [
+                              const Text(
+                                'The word was:',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFF1565C0), 
+                                ),
+                              ),
+                              Text(
+                                gameState.secretWord,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Color(0xFF1565C0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // New Round Button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1C2B3A),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () => _newRound(context),
+                            child: const Text(
+                              'New Round',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // Discussion Tips
+                  const Center(
+                    child: Text(
+                      'Discussion Tips',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                        color: Color(0xFF2D2D2D),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Bullet Tips
+                  ...[
+                    'Describe the word without saying it.',
+                    'Pay attention to suspicious answers.',
+                    'The imposter will try to blend in!',
+                    'Vote together on who you think the imposter is.',
+                  ].map((tip) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '• ',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFF555555),
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                tip,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF555555),
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+
+                  const SizedBox(height: 28),
+
+                  // New Game Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.coral,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => _newGame(context),
+                      child: const Text(
+                        'New Game',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+
+            // Close Button
+            Positioned(
+              top: 12,
+              right: 16,
+              child: GestureDetector(
+                onTap: () => _close(context),
+                child: const Icon(
+                  Icons.close,
+                  color: Color(0xFFBBBBBB),
+                  size: 24,
                 ),
               ),
-              const SizedBox(height: 8),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

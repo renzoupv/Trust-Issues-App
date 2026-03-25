@@ -4,16 +4,15 @@ import 'game_settings.dart';
 import '../data/word_categories.dart';
 
 class GameState {
-  final List<Player> players;   // All players with their roles assigned
-  final String secretWord;      // The word all non-imposters received
-  int currentPlayerIndex;       // Which player is currently viewing their word 
+  final List<Player> players; // All players with their roles assigned
+  final String secretWord; // The word all non-imposters received
+  int currentPlayerIndex; // Which player is currently viewing their word
 
   GameState({
     required this.players,
     required this.secretWord,
     this.currentPlayerIndex = 0,
   });
-
 
   // Creates a brand-new GameState from settings:
   //   1. Picks a random word from the chosen category
@@ -27,11 +26,13 @@ class GameState {
     final secretWord = words[random.nextInt(words.length)];
 
     // 2. Build player list in shuffled order
-    final shuffledNames = List<String>.from(settings.playerNames)..shuffle(random);
+    final shuffledNames = List<String>.from(settings.playerNames)
+      ..shuffle(random);
 
     // 3. Pick which index(es) are imposters
+    final imposterCount = settings.imposterCount.clamp(1, shuffledNames.length);
     final imposterIndexes = <int>{};
-    while (imposterIndexes.length < settings.imposterCount) {
+    while (imposterIndexes.length < imposterCount) {
       imposterIndexes.add(random.nextInt(shuffledNames.length));
     }
 
@@ -43,14 +44,13 @@ class GameState {
       );
     }).toList();
 
-    return GameState(
-      players: players,
-      secretWord: secretWord,
-    );
+    return GameState(players: players, secretWord: secretWord);
   }
 
   // The player who is currently being shown their word
-  Player get currentPlayer => players[currentPlayerIndex];
+  Player get currentPlayer => currentPlayerIndex < players.length
+      ? players[currentPlayerIndex]
+      : players.last;
 
   // True when all players have seen their word
   bool get allPlayersHaveSeen => currentPlayerIndex >= players.length;

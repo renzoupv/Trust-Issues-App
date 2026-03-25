@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openManagePlayers() async {
     final updated = await showDialog<List<String>>(
       context: context,
-      barrierColor: Colors.black54,    // dim the background
-      barrierDismissible: true,        // tap outside to cancel
+      barrierColor: Colors.black54, // dim the background
+      barrierDismissible: true, // tap outside to cancel
       builder: (_) => ManagePlayersScreen(currentNames: settings.playerNames),
     );
     if (updated != null) {
@@ -67,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
         return StatefulBuilder(
           builder: (ctx, setDialogState) {
             return AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               title: const Text(
                 'Number of Imposters',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
@@ -78,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     _imposterRuleLabel(settings.playerNames.length),
-                    style: const TextStyle(fontSize: 12, color: AppColors.textGray),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textGray,
+                    ),
                   ),
                   const SizedBox(height: 16),
 
@@ -89,14 +94,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () => setDialogState(() => tempSelected = count),
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 8),
-                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                          horizontal: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: isSelected
                               ? AppColors.coral.withOpacity(0.1)
                               : AppColors.offWhite,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: isSelected ? AppColors.coral : Colors.transparent,
+                            color: isSelected
+                                ? AppColors.coral
+                                : Colors.transparent,
                             width: 1.5,
                           ),
                         ),
@@ -108,11 +118,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: isSelected ? AppColors.coral : AppColors.textDark,
+                                color: isSelected
+                                    ? AppColors.coral
+                                    : AppColors.textDark,
                               ),
                             ),
                             if (isSelected)
-                              const Icon(Icons.check_circle, color: AppColors.coral, size: 20),
+                              const Icon(
+                                Icons.check_circle,
+                                color: AppColors.coral,
+                                size: 20,
+                              ),
                           ],
                         ),
                       ),
@@ -128,13 +144,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.coral,
                         foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                       onPressed: () {
                         setState(() => settings.imposterCount = tempSelected);
                         Navigator.pop(ctx);
                       },
-                      child: const Text('Confirm', style: TextStyle(fontWeight: FontWeight.bold)),
+                      child: const Text(
+                        'Confirm',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -144,10 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(color: AppColors.textGray),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                       onPressed: () => Navigator.pop(ctx),
-                      child: const Text('Cancel', style: TextStyle(color: AppColors.textGray)),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: AppColors.textGray),
+                      ),
                     ),
                   ),
                 ],
@@ -164,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // Returns a human-readable rule description for the current player count
   String _imposterRuleLabel(int playerCount) {
     if (playerCount >= 10) return '10+ players: up to 3 imposters allowed';
-    if (playerCount >= 6)  return '6–9 players: up to 2 imposters allowed';
+    if (playerCount >= 6) return '6–9 players: up to 2 imposters allowed';
     return '3–5 players: 1 imposter allowed';
   }
 
@@ -183,7 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierColor: Colors.black54,
       barrierDismissible: true,
-      builder: (_) => TimeLimitScreen(currentMinutes: settings.timeLimitMinutes),
+      builder: (_) =>
+          TimeLimitScreen(currentMinutes: settings.timeLimitMinutes),
     );
     if (minutes != null) {
       setState(() => settings.timeLimitMinutes = minutes);
@@ -201,7 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => WordRevealScreen(gameState: gameState, settings: settings),
+        builder: (_) =>
+            WordRevealScreen(gameState: gameState, settings: settings),
       ),
     );
   }
@@ -215,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.coral,
+      backgroundColor: const Color.fromARGB(255, 252, 115, 115),
       body: SafeArea(
         child: Column(
           children: [
@@ -240,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           'ISSUES',
                           style: TextStyle(
-                            fontSize: 52,
+                            fontSize: 67,
                             fontWeight: FontWeight.w900,
                             color: Colors.white,
                             letterSpacing: 3,
@@ -257,44 +285,75 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                   ),
-                  const SizedBox(height: 16),
-
-                  // How to Play
-                  const Text(
-                    'How to Play:',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  ...[
-                    'Pass the device to each player to see their word',
-                    'Most players get the same word',
-                    '1 or more impostors get picked',
-                    'Discuss and find the impostor!',
-                  ].asMap().entries.map((e) => Text(
-                        '${e.key + 1}. ${e.value}',
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
-                      )),
                 ],
               ),
             ),
 
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 6, 16, 12),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                      bottomLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(24),
+                    ),
                   ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
-                  child: Column(
-                    children: [
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
+                    child: Column(
+                      children: [
+                      // How to Play Card
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(bottom: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.grey.shade200),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'How to Play:',
+                              style: TextStyle(
+                                color: AppColors.textDark,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            ...[
+                              'Pass the device to each player to see their word',
+                              'Most players get the same word',
+                              '1 impostor gets a different word',
+                              'Discuss and find the impostor!',
+                            ].asMap().entries.map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2,
+                                ),
+                                child: Text(
+                                  '${e.key + 1}. ${e.value}',
+                                  style: const TextStyle(
+                                    color: AppColors.textDark,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       // Players tile
                       _SettingRow(
                         icon: Icons.people,
@@ -339,18 +398,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() => settings.timeLimitMinutes = null);
                           }
                         },
-                        onTap: settings.hasTimeLimit ? _openTimeLimitPicker : null,
+                        onTap: settings.hasTimeLimit
+                            ? _openTimeLimitPicker
+                            : null,
                       ),
 
                       const SizedBox(height: 24),
 
-                      // START GAME button (only shown when ready)
+                      // Start Game Button
                       BigGreenButton(
                         label: 'START GAME',
                         icon: Icons.play_arrow,
                         onPressed: _startGame,
                       ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -362,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// Individual setting row tile 
+// Individual setting row tile
 class _SettingRow extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -416,7 +478,10 @@ class _SettingRow extends StatelessWidget {
                   ),
                   Text(
                     subtitle,
-                    style: const TextStyle(fontSize: 11, color: AppColors.textGray),
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textGray,
+                    ),
                   ),
                 ],
               ),
@@ -436,7 +501,7 @@ class _SettingRow extends StatelessWidget {
   }
 }
 
-// Time Limit row with toggle switch 
+// Time Limit row with toggle switch
 class _TimeLimitRow extends StatelessWidget {
   final bool hasTimeLimit;
   final String timeLimitLabel;
@@ -488,7 +553,9 @@ class _TimeLimitRow extends StatelessWidget {
                     timeLimitLabel,
                     style: TextStyle(
                       fontSize: 11,
-                      color: hasTimeLimit ? AppColors.coral : AppColors.textGray,
+                      color: hasTimeLimit
+                          ? AppColors.coral
+                          : AppColors.textGray,
                     ),
                   ),
                 ),
